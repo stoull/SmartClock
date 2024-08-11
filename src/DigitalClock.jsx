@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-function DigitalClock(){
+function DigitalClock({ fontSize }){
 
     const [time, setTime] = useState(new Date());
 
@@ -32,7 +32,7 @@ function DigitalClock(){
     return(
         <div className="clock-container">
             <div className="clock">
-                <span>{formatTime()}</span>
+                <span style={{ fontSize: fontSize }}>{formatTime()}</span>
             </div>
         </div>
     );

@@ -12,8 +12,24 @@ import DigitalClock from './DigitalClock.jsx';
 function App() {
   const handle = useFullScreenHandle();
 
+  const [fontsize, setFontsize] = useState('12rem');
   const [temp, setTemp] = useState('--');
   const [humidity, setHumidity] = useState('--');
+
+  const increaseFontSize = () => {
+    setFontsize( preSize => {
+      let preInt = parseInt(preSize)
+      return `${preInt+1}rem`
+    });
+  };
+
+  const reduceFontSize = () => {
+    setFontsize( preSize => {
+      let preInt = parseInt(preSize)
+      return `${preInt-1}rem`
+    });
+  };
+
 
   useEffect(() => {
       const intervalId = setInterval(() => {
@@ -53,18 +69,22 @@ function App() {
 
       <div className='App-Content'>
 
+      <button onClick={reduceFontSize}>字体-</button>
+      <button onClick={increaseFontSize}>字体+</button>
+
         <button onClick={handle.enter}>
           全屏
         </button>
 
         <FullScreen handle={handle}>
-          <DigitalClock></DigitalClock>
-          <div className='Chart'>
-            <Line data={data} />
-          </div>
+          <DigitalClock fontSize={fontsize}></DigitalClock>
 
           <div>
             <p>温度: {temp}˚C          温度: {humidity}%</p>
+          </div>
+
+          <div className='Chart'>
+            <Line data={data} />
           </div>
 
         </FullScreen>
