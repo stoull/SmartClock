@@ -12,9 +12,58 @@ import DigitalClock from './DigitalClock.jsx';
 function App() {
   const handle = useFullScreenHandle();
 
+  const defaultTempInfo = {
+    "cpu_used_rate": 0,
+    "createDate": "--",
+    "cup_temp": 0,
+    "humidity": 0,
+    "id": 0,
+    "sys_runtime": "--",
+    "sys_uptime": "--",
+    "temperature": 0
+  }
   const [fontsize, setFontsize] = useState('12rem');
-  const [temp, setTemp] = useState('--');
-  const [humidity, setHumidity] = useState('--');
+  const [tempinfo, setTempinfo] = useState(defaultTempInfo);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     // 创建一个定时器
+//     const intervalId = setInterval(() => {
+//       fetchData()
+//     }, 360000); // 每6分钟）
+
+//     // 清理定时器
+//     return () => clearInterval(intervalId);
+//     fetchData()
+// }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://192.168.1.104:5001/api/v1/temperature-humidity'); // 替换为你的 API URL
+      if (!response.ok) {
+        throw new Error('网络响应不正常');
+      }
+      const result = await response.json();
+      // console.log("xxxxxxx result", result);
+      setTempinfo(result);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData()
+    // 创建一个定时器
+    const intervalId = setInterval(() => {
+      fetchData()
+    }, 10000); // 每6分钟）360000
+
+    // 清理定时器
+    return () => clearInterval(intervalId);
+  }, []);
 
   const increaseFontSize = () => {
     setFontsize( preSize => {
@@ -80,7 +129,7 @@ function App() {
           <DigitalClock fontSize={fontsize}></DigitalClock>
 
           <div>
-            <p>温度: {temp}˚C          温度: {humidity}%</p>
+            <p>温度: {tempinfo.temperature}˚C          湿度: {tempinfo.humidity}%      cpu: {tempinfo.cup_temp}˚C</p>
           </div>
 
           <div className='Chart'>
