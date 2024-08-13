@@ -22,31 +22,89 @@ function App() {
     "sys_uptime": "--",
     "temperature": 0
   }
+
+  const defaultTempTableData = {
+    labels: ['--:--', '--:--'],
+    datasets: [
+      {
+        label: "温度(˚C)",
+        data: [0, 0],
+        fill: false,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)"
+      }
+    ]
+  };
+
+
+  const defaultHumiTableData = {
+    labels: ['--:--', '--:--'],
+    datasets: [
+      {
+        label: "湿度(%)",
+        data: [0, 0],
+        fill: false,
+        borderColor: "#742774"
+      }
+    ]
+  };
+
+  const createTempData = (response) => {
+    const data_history = {
+      labels: response.labels,
+      datasets: [
+        {
+          label: "温度(˚C)",
+          data: response.temp,
+          fill: false,
+          backgroundColor: "rgba(75,192,192,0.2)",
+          borderColor: "rgba(75,192,192,1)"
+        }
+      ]
+    };
+    return data_history;
+  }
+
+  const createHumiData = (response) => {
+    const data_history = {
+      labels: response.labels,
+      datasets: [
+        {
+          label: "湿度(%)",
+          data: response.humi,
+          fill: false,
+          borderColor: "#742774"
+        }
+      ]
+    };
+    return data_history;
+  }
+
   const [fontsize, setFontsize] = useState('12rem');
   const [tempinfo, setTempinfo] = useState(defaultTempInfo);
+  const [temphistory, setTemphistory] = useState(defaultTempTableData);
+  const [humidityhistory, setHumidityhistory] = useState(defaultHumiTableData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-//   useEffect(() => {
-//     // 创建一个定时器
-//     const intervalId = setInterval(() => {
-//       fetchData()
-//     }, 360000); // 每6分钟）
-
-//     // 清理定时器
-//     return () => clearInterval(intervalId);
-//     fetchData()
-// }, []);
-
   const fetchData = async () => {
     try {
-      const response = await fetch('http://192.168.1.104:5001/api/v1/temperature-humidity'); // 替换为你的 API URL
-      if (!response.ok) {
+      const responseTemp = await fetch('http://hutpi.local:5001/api/v1/temperature-humidity');
+      if (!responseTemp.ok) {
         throw new Error('网络响应不正常');
       }
-      const result = await response.json();
-      // console.log("xxxxxxx result", result);
-      setTempinfo(result);
+      const resultTemp = await responseTemp.json();
+      setTempinfo(resultTemp);
+
+      const responseHistory = await fetch('http://hutpi.local:5001/api/v1/temperature-humidity/history');
+      if (!responseHistory.ok) {
+        throw new Error('网络响应不正常');
+      }
+      const resultHis = await responseHistory.json();
+      const tempTableData = createTempData(resultHis);
+      const humiTableData = createHumiData(resultHis);
+      setTemphistory(tempTableData);
+      setHumidityhistory(humiTableData);
     } catch (error) {
       setError(error);
     } finally {
@@ -79,36 +137,6 @@ function App() {
     });
   };
 
-
-  useEffect(() => {
-      const intervalId = setInterval(() => {
-          // read file or call a api
-      }, 5000);
-
-      return () => {
-          clearInterval(intervalId);
-      }
-  }, []);
-
-  const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "First dataset",
-        data: [33, 53, 85, 41, 44, 65],
-        fill: false,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)"
-      },
-      {
-        label: "Second dataset",
-        data: [33, 25, 35, 51, 54, 76],
-        fill: false,
-        borderColor: "#742774"
-      }
-    ]
-  };
-
   return (
     <div className="App">
 
@@ -133,7 +161,8 @@ function App() {
           </div>
 
           <div className='Chart'>
-            <Line data={data} />
+            <Line data={temphistory} />
+            <Line data={humidityhistory} />
           </div>
 
         </FullScreen>

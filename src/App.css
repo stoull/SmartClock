@@ -52,9 +52,17 @@
 }
 
 .Chart {
-  width: 600px;
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+  width: 50%;
   height: 400px;
 }
+
+/* .Chart-Line {
+  display: block;
+  width: 100%;
+} */
 
 /* body{
   background-image: url(assets/background.jpg);
