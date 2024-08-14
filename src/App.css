@@ -55,14 +55,14 @@
   display: flex;
   flex-direction: row;
   gap: 10%;
-  width: 50%;
-  height: 400px;
+  width: 94%;
+  height: 200px;
 }
 
-/* .Chart-Line {
+.Chart-Line {
   display: block;
-  width: 100%;
-} */
+  width: 100vw;
+}
 
 /* body{
   background-image: url(assets/background.jpg);

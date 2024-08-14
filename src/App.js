@@ -30,8 +30,8 @@ function App() {
         label: "温度(˚C)",
         data: [0, 0],
         fill: false,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)"
+        borderColor: "#FF8585",
+        borderCapStyle: 'round'
       }
     ]
   };
@@ -44,7 +44,8 @@ function App() {
         label: "湿度(%)",
         data: [0, 0],
         fill: false,
-        borderColor: "#742774"
+        borderColor: "#74E4EE",
+        borderCapStyle: 'round',
       }
     ]
   };
@@ -58,7 +59,9 @@ function App() {
           data: response.temp,
           fill: false,
           backgroundColor: "rgba(75,192,192,0.2)",
-          borderColor: "rgba(75,192,192,1)"
+          borderColor: "#FF8585",
+          borderCapStyle: 'round',
+          pointStyle: false
         }
       ]
     };
@@ -73,7 +76,9 @@ function App() {
           label: "湿度(%)",
           data: response.humi,
           fill: false,
-          borderColor: "#742774"
+          borderColor: "#99DCDC",
+          borderCapStyle: 'round',
+          pointStyle: false
         }
       ]
     };
@@ -89,14 +94,16 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const responseTemp = await fetch('http://hutpi.local:5001/api/v1/temperature-humidity');
+      const responseTemp = await fetch('http://127.0.0.1:5001/api/v1/temperature-humidity');
+      // const responseTemp = await fetch('http://hutpi.local:5001/api/v1/temperature-humidity');
       if (!responseTemp.ok) {
         throw new Error('网络响应不正常');
       }
       const resultTemp = await responseTemp.json();
       setTempinfo(resultTemp);
 
-      const responseHistory = await fetch('http://hutpi.local:5001/api/v1/temperature-humidity/history');
+      const responseHistory = await fetch('http://127.0.0.1:5001/api/v1/temperature-humidity/history');
+      // const responseHistory = await fetch('http://hutpi.local:5001/api/v1/temperature-humidity/history');
       if (!responseHistory.ok) {
         throw new Error('网络响应不正常');
       }
@@ -153,7 +160,7 @@ function App() {
           全屏
         </button>
 
-        <FullScreen handle={handle}>
+        {/* <FullScreen handle={handle}> */}
           <DigitalClock fontSize={fontsize}></DigitalClock>
 
           <div>
@@ -161,11 +168,26 @@ function App() {
           </div>
 
           <div className='Chart'>
-            <Line data={temphistory} />
-            <Line data={humidityhistory} />
+            <Line className='Chart-Line' 
+            data={temphistory} 
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              }} 
+            />
+          </div>
+ 
+          <div className='Chart'>
+            <Line className='Chart-Line' 
+            data={humidityhistory} 
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              }} 
+            />
           </div>
 
-        </FullScreen>
+        {/* </FullScreen> */}
 
         {/* <DigitalClock></DigitalClock>
         <div className='Chart'>
