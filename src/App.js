@@ -147,24 +147,23 @@ function App() {
   return (
     <div className="App">
 
-      <header className="App-header">
+      {/* <header className="App-header">
+      </header> */}
 
-      </header>
+      <div>
+        <button onClick={reduceFontSize}>字体-</button>
+        <button onClick={increaseFontSize}>字体+</button>
+        <button onClick={handle.enter}>全屏</button>
+      </div>
 
       <div className='App-Content'>
-
-      <button onClick={reduceFontSize}>字体-</button>
-      <button onClick={increaseFontSize}>字体+</button>
-
-        <button onClick={handle.enter}>
-          全屏
-        </button>
-
-        {/* <FullScreen handle={handle}> */}
+        <FullScreen handle={handle}>
           <DigitalClock fontSize={fontsize}></DigitalClock>
 
+
           <div>
-            <p>温度: {tempinfo.temperature}˚C          湿度: {tempinfo.humidity}%      cpu: {tempinfo.cup_temp}˚C</p>
+            <p className='Temp-Text'>温度: {tempinfo.temperature}˚C                 湿度: {tempinfo.humidity}%</p>
+            {/* <p className='Temp-Text'></p> */}
           </div>
 
           <div className='Chart'>
@@ -187,7 +186,11 @@ function App() {
             />
           </div>
 
-        {/* </FullScreen> */}
+          <div>
+            <p>{tempinfo.cup_temp}˚C</p>
+          </div>
+
+        </FullScreen>
 
         {/* <DigitalClock></DigitalClock>
         <div className='Chart'>
