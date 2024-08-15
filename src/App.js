@@ -7,8 +7,10 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 
 import { Line } from "react-chartjs-2";
-import DigitalClock from './DigitalClock.jsx';
-
+import DigitalClock from './component/DigitalClock.jsx';
+import TempGauge from './component/TempGauge.jsx';
+import HumidityGauge from './component/HumidityGauge.jsx';
+            
 function App() {
   const handle = useFullScreenHandle();
 
@@ -160,11 +162,22 @@ function App() {
         <FullScreen handle={handle}>
           <DigitalClock fontSize={fontsize}></DigitalClock>
 
+          <div className='Gauge-Container'>
+            <div className='Gauge-Chart'>
+              <TempGauge temp={tempinfo.temperature}></TempGauge>
+            </div>
 
-          <div>
-            <p className='Temp-Text'>温度: {tempinfo.temperature}˚C                 湿度: {tempinfo.humidity}%</p>
-            {/* <p className='Temp-Text'></p> */}
+            <div className='Gauge-Chart'>
+                <HumidityGauge humi={tempinfo.humidity}></HumidityGauge>
+            </div>
+
+            <p className='Temp-Text'>室外温度: {tempinfo.outdoors_temp}˚C              天气: {tempinfo.weather}</p>
+            <p style={{ fontSize: '8px', margin: '0 0 0 200px' }}>cpu: {tempinfo.cup_temp}˚C</p>
           </div>
+
+          {/* <div>
+            <p className='Temp-Text'>温度: {tempinfo.temperature}˚C                 湿度: {tempinfo.humidity}%</p>
+          </div> */}
 
           <div className='Chart'>
             <Line className='Chart-Line' 
@@ -184,10 +197,6 @@ function App() {
               maintainAspectRatio: false,
               }}
             />
-          </div>
-
-          <div>
-            <p>{tempinfo.cup_temp}˚C</p>
           </div>
 
         </FullScreen>

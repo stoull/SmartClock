@@ -7,9 +7,10 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 
 import { Line } from "react-chartjs-2";
-import DigitalClock from './DigitalClock.jsx';
-import MechanicalClock from './MechanicalClock.jsx';
-import TempGauge from './TempGauge.jsx';
+import DigitalClock from './component/DigitalClock.jsx';
+import MechanicalClock from './component/MechanicalClock.jsx';
+import TempGauge from './component/TempGauge.jsx';
+import HumidityGauge from './component/HumidityGauge.jsx';
 
 function App() {
   const handle = useFullScreenHandle();
@@ -160,7 +161,7 @@ function App() {
 
       <div className='App-Content'>
         <FullScreen handle={handle}>
-          {/* <DigitalClock fontSize={fontsize}></DigitalClock> */}
+          <DigitalClock fontSize={fontsize}></DigitalClock>
 
             {/* <div className='Mechanical-Clock'>
                 <MechanicalClock> </MechanicalClock>
@@ -169,8 +170,10 @@ function App() {
             <div className='Gauge-Chart'>
                 <TempGauge></TempGauge>
             </div>
-          
 
+            <div className='Gauge-Chart'>
+                <HumidityGauge></HumidityGauge>
+            </div>
 
           <div>
             <p className='Temp-Text'>温度: {tempinfo.temperature}˚C                 湿度: {tempinfo.humidity}%</p>
@@ -192,7 +195,7 @@ function App() {
             options={{
               responsive: true,
               maintainAspectRatio: false,
-              }} 
+              }}
             />
           </div>
 

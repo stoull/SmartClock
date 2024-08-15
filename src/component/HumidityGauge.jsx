@@ -1,8 +1,7 @@
 import React, { useEffect, useState }  from 'react';
 import ReactECharts from 'echarts-for-react';
-import { color } from 'chart.js/helpers';
 
-function TempGauge( {temp}) {
+function HumidityGauge( {humi = 45}) {
 
     const option_default = {
         series: [
@@ -11,26 +10,26 @@ function TempGauge( {temp}) {
                 center: ['50%', '60%'],
                 startAngle: 200,
                 endAngle: -20,
-                min: 21,
-                max: 33,
-                splitNumber: 6,
+                min: 0,
+                max: 100,
+                splitNumber: 5,
                 itemStyle: {
-                    color: '#FFAB91'
+                    color: '#0E84BB'
                 },
                 progress: {
                     show: true,
-                    width: 30
+                    width: 12
                 },
                 pointer: {
                     show: false
                 },
                 axisLine: {
                     lineStyle: {
-                    width: 30
+                    width: 12
                     }
                 },
                 axisTick: {
-                    distance: -45,
+                    distance: -20,
                     splitNumber: 5,
                     lineStyle: {
                     width: 2,
@@ -38,17 +37,17 @@ function TempGauge( {temp}) {
                     }
                 },
                 splitLine: {
-                    distance: -52,
-                    length: 14,
+                    distance: -30,
+                    length: 8,
                     lineStyle: {
                     width: 3,
                     color: '#999'
                     }
                 },
                 axisLabel: {
-                    distance: -20,
+                    distance: -14,
                     color: '#999',
-                    fontSize: 20
+                    fontSize: 14
                 },
                 anchor: {
                     show: false
@@ -62,10 +61,10 @@ function TempGauge( {temp}) {
                     lineHeight: 40,
                     borderRadius: 8,
                     offsetCenter: [0, '-15%'],
-                    fontSize: 50,
+                    fontSize: 34,
                     fontWeight: 'bolder',
-                    formatter: '{value} °C',
-                    color: 'inherit'
+                    formatter: '{value}%',
+                    color: '#0E84BB'
                 },
                 data: [
                     {
@@ -78,14 +77,14 @@ function TempGauge( {temp}) {
                 center: ['50%', '60%'],
                 startAngle: 200,
                 endAngle: -20,
-                min: 21,
-                max: 33,
+                min: 0,
+                max: 100,
                 itemStyle: {
-                    color: '#FD7347'
+                    color: '#0E84BB'
                 },
                 progress: {
                     show: true,
-                    width: 8
+                    width: 12
                 },
                 pointer: {
                     show: false
@@ -107,7 +106,7 @@ function TempGauge( {temp}) {
                 },
                 data: [
                     {
-                    value: 25
+                    value: 45
                     }
                 ]
             }
@@ -145,46 +144,9 @@ function TempGauge( {temp}) {
         }
     }
     
-    function getColorValue(temp) {
-        let colorValue;
-        let colorValue2;
-        if (temp < 20) {
-            colorValue = '#370097';
-            colorValue2 = '#370097';
-        } else if (temp >= 20 && temp < 22) {
-            colorValue = '#0034F5';
-            colorValue2 = '#0034F5';
-        } else if (temp >= 22 && temp < 24) {
-            colorValue = '#0084C1';
-            colorValue2 = '#0084C1';
-        } else if (temp >= 24 && temp < 27) {
-            colorValue = '#56A63B';
-            colorValue2 = '#56A63B';
-        } else if (temp >= 27 && temp < 28) {
-            colorValue = '#CAE644';
-            colorValue2 = '#CAE644';
-        } else if (temp >= 28 && temp < 29) {
-            colorValue = '#FFFF4D';
-            colorValue2 = '#FFFF4D';
-        } else if (temp >= 29 && temp < 30) {
-            colorValue = '#FFB430';
-            colorValue2 = '#FFB430';
-        } else if (temp >= 30 && temp < 31) {
-            colorValue = '#FF912A';
-            colorValue2 = '#FF912A';
-        } else if (temp >= 31 && temp < 32) {
-            colorValue = '#FF4122';
-            colorValue2 = '#FF4122';
-        } else if (temp >= 32 && temp < 33) {
-            colorValue = '#FF2B22';
-            colorValue2 = '#FF2B22';
-        } else if (temp >= 33) {
-            colorValue = '#FF2B22';
-            colorValue2 = '#FF2B22';
-        } else {
-            colorValue = '#999';
-            colorValue2 = '#999';
-        }
+    function getColorValue(humi) {
+        const colorValue = "#0E84BB";
+        const colorValue2 = "#0E84BB";
         return [colorValue, colorValue2];
     }
 
@@ -195,17 +157,18 @@ function TempGauge( {temp}) {
     }
 
     useEffect(() => {
-        const runTimer = setInterval(function () {
-            const random = getRandomNumber(20, 34);
-            setOption(getNewTempOption(random))
-        }, 2000);
-        
-        return () => clearInterval(runTimer);
-    }, [temp])
+        // const runTimer = setInterval(function () {
+        //     const random = getRandomNumber(0, 100);
+        //     setOption(getNewTempOption(random))
+        // }, 2000);
+        // return () => clearInterval(runTimer);
+        const newOption = getNewTempOption(humi);
+        setOption(newOption)
+    }, [humi])
 
     return(
-        <ReactECharts option={option} style={{ width: "600px", height: "400px" }} />
+        <ReactECharts option={option} style={{ width: "280px", height: "180px" }} />
     )
 }
 
-export default TempGauge;
+export default HumidityGauge;
