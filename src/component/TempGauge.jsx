@@ -64,7 +64,7 @@ function TempGauge( {temp = 0}) {
                     offsetCenter: [0, '-15%'],
                     fontSize: 34,
                     fontWeight: 'bolder',
-                    formatter: '{value} °C',
+                    formatter: '{value}°C',
                     color: 'inherit'
                 },
                 data: [

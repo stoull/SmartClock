@@ -172,7 +172,7 @@ function App() {
             </div>
 
             <p className='Temp-Text'>室外温度: {tempinfo.outdoors_temp}˚C              天气: {tempinfo.weather}</p>
-            <p style={{ fontSize: '8px', margin: '0 0 0 200px' }}>cpu: {tempinfo.cup_temp}˚C</p>
+            <p style={{ fontSize: '10px', margin: '0 0 0 200px' }}>cpu: {tempinfo.cup_temp}˚C</p>
           </div>
 
           {/* <div>
