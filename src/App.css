@@ -46,8 +46,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   color: white;
+}
+
+.Mechanical-Clock {
+  width: 100vw;
+  height: 600px;
+}
+
+.Gauge-Chart {
+  width: 400px;
+  height: 400px;
 }
 
 .Chart {
