@@ -11,4 +11,4 @@ copy ./build/ /usr/share/nginx/html/smartclock/
 #copy ./*.png /usr/share/nginx/html/
 #copy ./*.js /usr/share/nginx/html/
 
-EXPOSE 3001
+EXPOSE 80

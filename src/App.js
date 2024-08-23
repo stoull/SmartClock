@@ -10,6 +10,7 @@ import { Line } from "react-chartjs-2";
 import DigitalClock from './component/DigitalClock.jsx';
 import TempGauge from './component/TempGauge.jsx';
 import HumidityGauge from './component/HumidityGauge.jsx';
+import SideBar from './pages/SideBar.js';
             
 function App() {
   const handle = useFullScreenHandle();
@@ -148,7 +149,6 @@ function App() {
 
   return (
     <div className="App">
-
       {/* <header className="App-header">
       </header> */}
 
@@ -159,8 +159,9 @@ function App() {
       </div>
 
       <div className='App-Content'>
+        <SideBar />
         <FullScreen handle={handle}>
-          <DigitalClock fontSize={fontsize}></DigitalClock>
+          {/* <DigitalClock fontSize={fontsize}></DigitalClock> */}
 
           <div className='Gauge-Container'>
             <div className='Gauge-Chart'>
