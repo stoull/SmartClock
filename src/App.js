@@ -11,84 +11,13 @@ import DigitalClock from './component/DigitalClock.jsx';
 import TempGauge from './component/TempGauge.jsx';
 import HumidityGauge from './component/HumidityGauge.jsx';
 import SideBar from './pages/SideBar.js';
-            
+import { defaultTempInfo, defaultTempTableData, defaultHumiTableData, createTempData, createHumiData } from './model/Data.js';
+import TempHumiBoard from './component/TempHumiBoard.jsx'
+
 function App() {
   const handle = useFullScreenHandle();
-
-  const defaultTempInfo = {
-    "cpu_used_rate": 0,
-    "createDate": "--",
-    "cup_temp": 0,
-    "humidity": 0,
-    "id": 0,
-    "sys_runtime": "--",
-    "sys_uptime": "--",
-    "temperature": 0
-  }
-
-  const defaultTempTableData = {
-    labels: ['--:--', '--:--'],
-    datasets: [
-      {
-        label: "温度(˚C)",
-        data: [0, 0],
-        fill: false,
-        borderColor: "#FF8585",
-        borderCapStyle: 'round'
-      }
-    ]
-  };
-
-
-  const defaultHumiTableData = {
-    labels: ['--:--', '--:--'],
-    datasets: [
-      {
-        label: "湿度(%)",
-        data: [0, 0],
-        fill: false,
-        borderColor: "#74E4EE",
-        borderCapStyle: 'round',
-      }
-    ]
-  };
-
-  const createTempData = (response) => {
-    const data_history = {
-      labels: response.labels,
-      datasets: [
-        {
-          label: "温度(˚C)",
-          data: response.temp,
-          fill: false,
-          backgroundColor: "rgba(75,192,192,0.2)",
-          borderColor: "#FF8585",
-          borderCapStyle: 'round',
-          pointStyle: false
-        }
-      ]
-    };
-    return data_history;
-  }
-
-  const createHumiData = (response) => {
-    const data_history = {
-      labels: response.labels,
-      datasets: [
-        {
-          label: "湿度(%)",
-          data: response.humi,
-          fill: false,
-          borderColor: "#99DCDC",
-          borderCapStyle: 'round',
-          pointStyle: false
-        }
-      ]
-    };
-    return data_history;
-  }
-
   const [fontsize, setFontsize] = useState('12rem');
+  const [fontsizeTemp, setFontsizeTemp] = useState('4rem');
   const [tempinfo, setTempinfo] = useState(defaultTempInfo);
   const [temphistory, setTemphistory] = useState(defaultTempTableData);
   const [humidityhistory, setHumidityhistory] = useState(defaultHumiTableData);
@@ -136,15 +65,29 @@ function App() {
   const increaseFontSize = () => {
     setFontsize( preSize => {
       let preInt = parseInt(preSize)
+      preInt = preInt > 1 ? preInt : 1;
       return `${preInt+1}rem`
     });
+
+    setFontsizeTemp( preSize => {
+      let preInt = parseInt(preSize)
+      preInt = preInt > 1 ? preInt : 1;
+      return `${preInt+1}rem`
+    })
   };
 
   const reduceFontSize = () => {
     setFontsize( preSize => {
       let preInt = parseInt(preSize)
+      preInt = preInt > 2 ? preInt : 2;
       return `${preInt-1}rem`
     });
+
+    setFontsizeTemp( preSize => {
+      let preInt = parseInt(preSize)
+      preInt = preInt > 2 ? preInt : 2;
+      return `${preInt-1}rem`
+    })
   };
 
   return (
@@ -161,9 +104,10 @@ function App() {
       <div className='App-Content'>
         <SideBar />
         <FullScreen handle={handle}>
-          {/* <DigitalClock fontSize={fontsize}></DigitalClock> */}
+          <DigitalClock fontSize={fontsize}></DigitalClock>
 
-          <div className='Gauge-Container'>
+          <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
+          {/* <div className='Gauge-Container'>
             <div className='Gauge-Chart'>
               <TempGauge temp={tempinfo.temperature}></TempGauge>
             </div>
@@ -172,12 +116,12 @@ function App() {
                 <HumidityGauge humi={tempinfo.humidity}></HumidityGauge>
             </div>
 
-            <p className='Temp-Text'>室外温度: {tempinfo.outdoors_temp}˚C              天气: {tempinfo.weather}</p>
+            <p className='Temp-text'>室外温度: {tempinfo.outdoors_temp}˚C           天气: {tempinfo.weather}</p>
             <p style={{ fontSize: '10px', margin: '0 0 0 200px' }}>cpu: {tempinfo.cup_temp}˚C</p>
-          </div>
+          </div> */}
 
           {/* <div>
-            <p className='Temp-Text'>温度: {tempinfo.temperature}˚C                 湿度: {tempinfo.humidity}%</p>
+            <p className='Temp-text'>温度: {tempinfo.temperature}˚C                 湿度: {tempinfo.humidity}%</p>
           </div> */}
 
           <div className='Chart'>

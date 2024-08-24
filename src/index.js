@@ -7,7 +7,7 @@ import { IconContext } from "react-icons";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <IconContext.Provider value={{ size: 40, color: "#FB2576" }}>
+  <IconContext.Provider value={{ size: 40, color: "#8B8B8B" }}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

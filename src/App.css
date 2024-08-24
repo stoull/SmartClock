@@ -43,6 +43,7 @@
 .App-Content {
   background-color: #282c34;
   min-height: 10vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,10 +78,6 @@
   height: 190px;
 }
 
-.Temp-Text {
-  font-size: 32px;
-}
-
 .Chart-Line {
   display: block;
   width: 100vw;
@@ -101,16 +98,59 @@
 } */
 
 .clock-container{
-  backdrop-filter: blur(5px);
-  width: 100vw;
-  padding: 10px 0;
+  /* backdrop-filter: blur(5px); */
+  /* width: 100vw; */
+  /* padding: 0 20px 0 20px; */
+  padding: 0;
 }
 
 .clock{
+  backdrop-filter: blur(5px);
   color: white;
   font-size: 6rem;
   font-weight: bold;
   font-family: monospace;
   text-align: center;
   text-shadow: 3px 3px 5px hsla(0, 0%, 0%, 0.75);
+}
+
+.Temp-humi-board {
+  width: 100vw;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  /* grid-template-columns: 1fr 3fr 1fr; */
+  gap: 60px;
+}
+
+.Temp-humi-board-temp {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.Temp-humi-board-out {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.Temp-humi-text {
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+}
+
+.Temp-text {
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+}
+
+.Temp-text-small {
+  font-size: 10px;
+  text-align: center;
+  margin: auto 0;
 }
