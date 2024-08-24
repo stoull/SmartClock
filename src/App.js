@@ -11,7 +11,7 @@ import DigitalClock from './component/DigitalClock.jsx';
 import TempGauge from './component/TempGauge.jsx';
 import HumidityGauge from './component/HumidityGauge.jsx';
 import SideBar from './pages/SideBar.js';
-import { defaultTempInfo, defaultTempTableData, defaultHumiTableData, createTempData, createHumiData } from './model/Data.js';
+import { defaultTempInfo, defaultTempTableData, defaultHumiTableData, createTempData, createHumiData, tempEchartLineOptions } from './model/Data.js';
 import TempHumiBoard from './component/TempHumiBoard.jsx'
 
 function App() {
@@ -104,7 +104,7 @@ function App() {
       <div className='App-Content'>
         <SideBar />
         <FullScreen handle={handle}>
-          <DigitalClock fontSize={fontsize}></DigitalClock>
+          {/* <DigitalClock fontSize={fontsize}></DigitalClock> */}
 
           <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
           {/* <div className='Gauge-Container'>
@@ -127,10 +127,7 @@ function App() {
           <div className='Chart'>
             <Line className='Chart-Line' 
             data={temphistory} 
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              }} 
+            options={tempEchartLineOptions} 
             />
           </div>
  
