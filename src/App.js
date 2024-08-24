@@ -20,7 +20,6 @@ function App() {
   const [fontsizeTemp, setFontsizeTemp] = useState('4rem');
   const [tempinfo, setTempinfo] = useState(defaultTempInfo);
   const [temphistory, setTemphistory] = useState(defaultTempTableData);
-  const [humidityhistory, setHumidityhistory] = useState(defaultHumiTableData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -43,7 +42,6 @@ function App() {
       const tempTableData = createTempData(resultHis);
       const humiTableData = createHumiData(resultHis);
       setTemphistory(tempTableData);
-      setHumidityhistory(humiTableData);
     } catch (error) {
       setError(error);
     } finally {
@@ -104,7 +102,7 @@ function App() {
       <div className='App-Content'>
         <SideBar />
         <FullScreen handle={handle}>
-          {/* <DigitalClock fontSize={fontsize}></DigitalClock> */}
+          <DigitalClock fontSize={fontsize}></DigitalClock>
 
           <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
           {/* <div className='Gauge-Container'>
@@ -130,17 +128,6 @@ function App() {
             options={tempEchartLineOptions} 
             />
           </div>
- 
-          <div className='Chart'>
-            <Line className='Chart-Line' 
-            data={humidityhistory} 
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              }}
-            />
-          </div>
-
         </FullScreen>
 
         {/* <DigitalClock></DigitalClock>

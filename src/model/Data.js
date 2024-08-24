@@ -16,19 +16,19 @@ export const defaultTempInfo = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
-      y: {
-        beginAtZero: true,
+      y1: {
+        beginAtZero: false,
         type: 'linear',
         position: 'left',
-        id: 'y-axis-1'
+        id: 'y1'
       },
       y2: {
-          beginAtZero: true,
+          beginAtZero: false,
           type: 'linear',
           position: 'right',
-          id: 'y-axis-2',
+          id: 'y2',
           grid: {
-              drawOnChartArea: false // 不绘制右侧 Y 轴的网格线
+              drawOnChartArea: true // 不绘制右侧 Y 轴的网格线
           },
           ticks: {
             callback: function(value, index, vitals) {
@@ -48,7 +48,7 @@ export const defaultTempInfo = {
         fill: false,
         borderColor: "#FF8585",
         borderCapStyle: 'round',
-        yAxisID: 'y-axis-1' // 指定使用左侧 Y 轴
+        yAxisID: 'y1' // 指定使用左侧 Y 轴
       },
       {
         label: "湿度(%)",
@@ -56,7 +56,7 @@ export const defaultTempInfo = {
         fill: false,
         borderColor: "#74E4EE",
         borderCapStyle: 'round',
-        yAxisID: 'y-axis-2' // 指定使用右侧 Y 轴
+        yAxisID: 'y2' // 指定使用右侧 Y 轴
       }
     ]
   };
@@ -87,7 +87,7 @@ export const defaultTempInfo = {
           borderColor: "#FF8585",
           borderCapStyle: 'round',
           pointStyle: false,
-          yAxisID: 'y-axis-1'
+          yAxisID: 'y1'
         },
         {
           label: "湿度(%)",
@@ -96,7 +96,7 @@ export const defaultTempInfo = {
           borderColor: "#99DCDC",
           borderCapStyle: 'round',
           pointStyle: false,
-          yAxisID: 'y-axis-2'
+          yAxisID: 'y2'
         }
       ]
     };
