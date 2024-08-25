@@ -28,7 +28,7 @@ export const defaultTempInfo = {
           position: 'right',
           id: 'y2',
           grid: {
-              drawOnChartArea: true // 不绘制右侧 Y 轴的网格线
+              drawOnChartArea: false // 不绘制右侧 Y 轴的网格线
           },
           ticks: {
             callback: function(value, index, vitals) {
