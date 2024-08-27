@@ -3,6 +3,9 @@ import { defaultTempInfo } from '../model/Data.js';
 import '../App.css'
 import { getHumiColorValue, getTempColorValue } from '../model/ColorData.js'
 
+import TempGauge from './TempGauge.jsx';
+import HumidityGauge from './HumidityGauge.jsx';
+
 function TempHumiBoard( {tempInfo = defaultTempInfo, fontSize}) {
     const default_showValues = {
         temp: 0,
@@ -45,6 +48,19 @@ function TempHumiBoard( {tempInfo = defaultTempInfo, fontSize}) {
     }, [tempInfo])
 
     return(
+        // <div className='Gauge-Container'>
+        //     <div className='Gauge-Chart'>
+        //       <TempGauge temp={showValues.temp}></TempGauge>
+        //     </div>
+
+        //     <div className='Gauge-Chart'>
+        //         <HumidityGauge humi={showValues.humi}></HumidityGauge>
+        //     </div>
+
+        //     <p className='Temp-text'>室外温度: {showValues.weather_temp}˚C           天气: {showValues.weather}</p>
+        //     <p style={{ fontSize: '10px', margin: '0 0 0 200px' }}>cpu: {showValues.cpu_temp}˚C</p>
+        // </div>
+
         <div className='Temp-humi-board'>
             <div className='Temp-humi-board-temp'>
                 <p className='Temp-humi-text' style={{ fontSize: fontSize, color: showValues.temp_color}}>{showValues.temp}˚C</p>

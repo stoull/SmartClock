@@ -8,8 +8,6 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 import { Line } from "react-chartjs-2";
 import DigitalClock from './component/DigitalClock.jsx';
-import TempGauge from './component/TempGauge.jsx';
-import HumidityGauge from './component/HumidityGauge.jsx';
 import SideBar from './pages/SideBar.js';
 import { defaultTempInfo, defaultTempTableData, defaultHumiTableData, createTempData, createHumiData, tempEchartLineOptions } from './model/Data.js';
 import TempHumiBoard from './component/TempHumiBoard.jsx'
@@ -101,26 +99,12 @@ function App() {
 
       <div className='App-Content'>
         <SideBar />
+
         <FullScreen handle={handle}>
-          <DigitalClock fontSize={fontsize}></DigitalClock>
+
+          {/* <DigitalClock fontSize={fontsize}></DigitalClock> */}
 
           <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
-          {/* <div className='Gauge-Container'>
-            <div className='Gauge-Chart'>
-              <TempGauge temp={tempinfo.temperature}></TempGauge>
-            </div>
-
-            <div className='Gauge-Chart'>
-                <HumidityGauge humi={tempinfo.humidity}></HumidityGauge>
-            </div>
-
-            <p className='Temp-text'>室外温度: {tempinfo.outdoors_temp}˚C           天气: {tempinfo.weather}</p>
-            <p style={{ fontSize: '10px', margin: '0 0 0 200px' }}>cpu: {tempinfo.cup_temp}˚C</p>
-          </div> */}
-
-          {/* <div>
-            <p className='Temp-text'>温度: {tempinfo.temperature}˚C                 湿度: {tempinfo.humidity}%</p>
-          </div> */}
 
           <div className='Chart'>
             <Line className='Chart-Line' 
@@ -128,12 +112,9 @@ function App() {
             options={tempEchartLineOptions} 
             />
           </div>
+
         </FullScreen>
 
-        {/* <DigitalClock></DigitalClock>
-        <div className='Chart'>
-          <Line data={data} />
-        </div> */}
       </div>
     </div>
   );
