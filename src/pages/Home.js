@@ -99,7 +99,7 @@ function Home() {
 
         <FullScreen handle={handle}>
 
-          {/* <DigitalClock fontSize={fontsize}></DigitalClock> */}
+          <DigitalClock fontSize={fontsize}></DigitalClock>
 
           <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
 
