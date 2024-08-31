@@ -22,7 +22,6 @@ function TempHumiBoard( {tempInfo = defaultTempInfo, fontSize}) {
     const [showValues, setShowValues] = useState(default_showValues)
 
     useEffect(() => {
-        console.log('xxxxxx fontSize', fontSize)
         setFontWeatherSize( preValue => {
             let preInt = parseInt(preValue)
             const fRate = preInt/4

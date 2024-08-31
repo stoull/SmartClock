@@ -4,16 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { IconContext } from "react-icons";
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <IconContext.Provider value={{ size: 40, color: "#8B8B8B" }}>
-    <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-    </React.StrictMode>
-  </IconContext.Provider>
+  <BrowserRouter>
+    <IconContext.Provider value={{ size: 40, color: "#8B8B8B" }}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </IconContext.Provider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
