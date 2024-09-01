@@ -25,9 +25,9 @@ function TempHumiBoard( {tempInfo = defaultTempInfo, fontSize}) {
     useEffect(() => {
         setFontWeatherSize( preValue => {
             let preInt = parseInt(preValue)
+            preInt = preInt > 3 ? preInt : 3;
             const fRate = preInt/4
             let wFontS = preInt-fRate
-            wFontS = wFontS > 1 ? wFontS : 1;
             return `${wFontS}rem`
         })
     }, [fontSize])

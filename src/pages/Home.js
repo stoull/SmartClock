@@ -52,7 +52,7 @@ function Home() {
     // 创建一个定时器
     const intervalId = setInterval(() => {
       fetchData()
-    }, 10000); // 每6分钟）360000
+    }, 180000); // 每6分钟）360000
 
     // 清理定时器
     return () => clearInterval(intervalId);
