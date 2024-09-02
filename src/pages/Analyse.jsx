@@ -3,7 +3,7 @@ import './Home.css';
 import Chart from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 
-import { defaultTempTableData, tempEchartLineOptions, createTempData, createHumiData } from '../model/Data.js';
+import { defaultTempTableData, historyEchartLineOptions, createTempHistoryData, createHumiData } from '../model/Data.js';
 import {formatDate, subtractHours } from '../tools/tools.js';
 
 export function Analyse() {
@@ -23,8 +23,8 @@ export function Analyse() {
     const fetchData = async () => {
         let startDate = new Date();
         let endDate = new Date();
-        startDate.setHours(22, 0, 0, 0);
-        endDate.setHours(8, 1, 0, 0);
+        startDate.setHours(9, 0, 0, 0);
+        endDate.setHours(9, 1, 0, 0);
 
         startDate = subtractHours(startDate, 24);
         endDate = subtractHours(endDate, 24);
@@ -50,7 +50,7 @@ export function Analyse() {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const historyData = await response.json();
-                const tempTableData = createTempData(historyData);
+                const tempTableData = createTempHistoryData(historyData);
                 setHistories(preItems => [...preItems, tempTableData])
             } catch (error) {
                 setError(error);
@@ -73,7 +73,7 @@ export function Analyse() {
                                 <div key={index} className='Chart'>
                                     <Line className='Chart Chart-Line' 
                                         data={element} 
-                                        options={tempEchartLineOptions} 
+                                        options={historyEchartLineOptions} 
                                     />
                                 </div>
                             )
