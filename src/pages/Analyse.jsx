@@ -39,7 +39,7 @@ export function Analyse() {
             const eDate = subtractHours(endDate, 24*i);
             const formattedStartDate = formatDate(sDate);
             const formattedEndDate = formatDate(eDate);
-            const url = `http://hutpi.local:5001/api/v1/surroundings/history?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
+            const url = `http://hutpi.local:5001/api/smart-clock/surroundings/history?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
             urls.push(url);
         }
 
