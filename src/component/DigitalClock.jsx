@@ -12,11 +12,13 @@ function DigitalClock({ fontSize }){
             const pad_hours = padZero(timeInfo.hours);
             const pad_minutes = padZero(timeInfo.minutes);
             const pad_seconds = padZero(timeInfo.seconds);
+            const dayOfWeekDay = timeInfo.dayOfWeekDay;
             setTimeInfo( (prev) => ({
                 ...prev,
                 hours: pad_hours,
                 minutes: pad_minutes,
-                seconds: pad_seconds
+                seconds: pad_seconds,
+                dayOfWeekDay: dayOfWeekDay
             }))
         }, 1000);
 
@@ -44,12 +46,16 @@ function DigitalClock({ fontSize }){
         const minutes = date.getMinutes();
         const seconds = date.getSeconds();
         const meridiem = hours >= 12 ? "PM" : "AM";
+        const dayOfWeek = date.getDay();
+        const days = ["日", "一", "二", "三", "四", "五", "六"];
+        const dayOfWeekDay = days[dayOfWeek]
         // hours = hours % 12 || 12;
         return {
             meridiem,
             hours,
             minutes,
-            seconds
+            seconds,
+            dayOfWeekDay
         }
     }
     
@@ -63,6 +69,7 @@ function DigitalClock({ fontSize }){
                 <span className='clock' style={{ fontSize: fontSize }}>{timeInfo.hours}</span>
                 <span className='clock-dot' style={{ fontSize: fontSize }}>:</span>
                 <span className='clock' style={{ fontSize: fontSize }}>{timeInfo.minutes}</span>
+                <span className='clock' style={{ fontSize: fontSize-1, margin: 'auto 0 auto 120px'}}>{timeInfo.dayOfWeekDay}</span>
             </div>
         </div>
     );
