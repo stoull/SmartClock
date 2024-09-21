@@ -15,7 +15,7 @@ import { AiOutlineSetting, AiOutlineMinus, AiOutlinePlus, AiOutlineFullscreen, A
 
 function Home() {
   const handle = useFullScreenHandle();
-  const [fontsize, setFontsize] = useState('12rem');
+  const [fontsize, setFontsize] = useState('14rem');
   const [fontsizeTemp, setFontsizeTemp] = useState('4rem');
   const [tempinfo, setTempinfo] = useState(defaultTempInfo);
   const [temphistory, setTemphistory] = useState(defaultTempTableData);
@@ -116,7 +116,7 @@ function Home() {
       </div>
       <div className='Home-Content'>
 
-        <FullScreen className='Home-Content' handle={handle}>
+        <FullScreen className='FullScreen-Content' handle={handle}>
 
           <DigitalClock fontSize={fontsize}></DigitalClock>
 
