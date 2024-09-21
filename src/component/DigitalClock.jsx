@@ -5,6 +5,21 @@ function DigitalClock({ fontSize }){
 
     const [time, setTime] = useState(new Date());
     const [timeInfo, setTimeInfo] = useState({});
+    const [titleFontSize, setTitleFontSize] = useState(fontSize);
+    const [dayFontSize, setDayFontSize] = useState(fontSize);
+
+    useEffect(() => {
+        setTitleFontSize(preSize => {
+            return fontSize
+        })
+
+        setDayFontSize( preSize => {
+            let preInt = parseInt(fontSize)
+            preInt = preInt > 1 ? preInt : 1;
+            return `${preInt-1}rem`
+        })
+
+    }, [fontSize])
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -66,10 +81,10 @@ function DigitalClock({ fontSize }){
     return(
         <div className="clock-container">
             <div className="clock">
-                <span className='clock' style={{ fontSize: fontSize }}>{timeInfo.hours}</span>
-                <span className='clock-dot' style={{ fontSize: fontSize }}>:</span>
-                <span className='clock' style={{ fontSize: fontSize }}>{timeInfo.minutes}</span>
-                <span className='clock' style={{ fontSize: fontSize-1, margin: 'auto 0 auto 120px'}}>{timeInfo.dayOfWeekDay}</span>
+                <span className='clock' style={{ fontSize: titleFontSize }}>{timeInfo.hours}</span>
+                <span className='clock-dot' style={{ fontSize: titleFontSize }}>:</span>
+                <span className='clock' style={{ fontSize: titleFontSize }}>{timeInfo.minutes}</span>
+                <span className='clock' style={{ fontSize: dayFontSize, margin: 'auto 0 auto 120px'}}>{timeInfo.dayOfWeekDay}</span>
             </div>
         </div>
     );
