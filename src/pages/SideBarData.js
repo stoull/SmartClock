@@ -1,12 +1,12 @@
 import React from 'react';
-import { AiOutlineMoon, AiOutlineSun, AiOutlineSetting, AiOutlineBgColors } from "react-icons/ai";
+import { AiOutlineMoon, AiOutlineSun, AiOutlineSetting, AiOutlineBgColors, AiOutlineMenuFold,AiOutlineMenuUnfold, AiOutlineDoubleRight } from "react-icons/ai";
 
 
 export const SideBarData = [
     {
-        title: 'Settings',
+        title: '',
         path: '/',
-        icon: <AiOutlineSetting />,
+        icon: <AiOutlineDoubleRight />,
         cName: 'nav-text'
     },
     {

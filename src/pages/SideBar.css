@@ -1,6 +1,6 @@
 .sidebar {
     /* background-color: rgb(183, 247, 181); */
-    height: 80px;
+    height: 40px;
     width: 100%;
     display: flex;
     justify-content: end;
@@ -15,10 +15,11 @@
   }
   
   .nav-menu {
-    /* background-color: rgb(183, 247, 181); */
+    background-color: #282c34;
     width: 250px;
     height: 100vh;
     display: flex;
+    margin-top: 42px;
     justify-content: center;
     position: fixed;
     top: 0;
@@ -35,7 +36,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 8px 0px 8px 16px;
+    padding: 0px 0px 0px 16px;
     list-style: none;
     height: 60px;
     color: #8B8B8B;

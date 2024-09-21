@@ -16,7 +16,7 @@ function DigitalClock({ fontSize }){
         setDayFontSize( preSize => {
             let preInt = parseInt(fontSize)
             preInt = preInt > 1 ? preInt : 1;
-            return `${preInt-1}rem`
+            return `${preInt-3}rem`
         })
 
     }, [fontSize])

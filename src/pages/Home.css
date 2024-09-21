@@ -4,6 +4,15 @@
     min-width: 100vw;
     min-height: 100vh;
   }
+
+  .navbar{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 0 5vw 0 0;
+    align-items: right;
+  }
   
   .Home-Content {
     background-color: #282c34;
@@ -82,7 +91,6 @@
     justify-content: center;
     backdrop-filter: blur(5px);
     text-shadow: 3px 3px 5px hsla(0, 0%, 0%, 0.75);
-    justify-content: center;
   }
   
   .clock-dot {

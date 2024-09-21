@@ -5,12 +5,13 @@ import React, {useCallback, useState, useEffect} from "react";
 import Chart from 'chart.js/auto';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-
 import { Line } from "react-chartjs-2";
 import DigitalClock from '../component/DigitalClock.jsx';
 import SideBar from './SideBar.js';
 import { defaultTempInfo, defaultTempTableData, defaultHumiTableData, createTempData, createHumiData, tempEchartLineOptions } from '../model/Data.js';
 import TempHumiBoard from '../component/TempHumiBoard.jsx'
+
+import { AiOutlineSetting, AiOutlineMinus, AiOutlinePlus, AiOutlineFullscreen, AiOutlineFullscreenExit } from "react-icons/ai";
 
 function Home() {
   const handle = useFullScreenHandle();
@@ -20,6 +21,8 @@ function Home() {
   const [temphistory, setTemphistory] = useState(defaultTempTableData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [appearance, setAppearance] = useState({});
 
   const fetchData = async () => {
     try {
@@ -86,18 +89,34 @@ function Home() {
     })
   };
 
+  const [showSideBar, setShowSideBar] = useState(false);
+  const handleSideBar = () => {
+    setShowSideBar( preStaus => {
+      return !preStaus
+    })
+  }
+
+  const sideBarIsChanged = (newValue) => {
+    setShowSideBar(newValue)
+  }
+
+  const updateAppearance = (newValue) => {
+    console.log("xxxx update appearance newValue: ", newValue)
+  }
+
   return (
     <div className="Home">
-      <div>
-        <button onClick={reduceFontSize}>字体-</button>
-        <button onClick={increaseFontSize}>字体+</button>
-        <button onClick={handle.enter}>全屏</button>
+      <div className='navbar'>
+        <AiOutlinePlus onClick={increaseFontSize} />
+        <AiOutlineMinus onClick={reduceFontSize} />
+        <AiOutlineFullscreen onClick={handle.enter} />
+
+        <AiOutlineSetting onClick={handleSideBar} />
+        <SideBar isShow={showSideBar} onIsShowChange={sideBarIsChanged} updateAppearance={updateAppearance}/>
       </div>
-
       <div className='Home-Content'>
-        <SideBar />
 
-        <FullScreen handle={handle}>
+        <FullScreen className='Home-Content' handle={handle}>
 
           <DigitalClock fontSize={fontsize}></DigitalClock>
 
