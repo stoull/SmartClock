@@ -26,16 +26,16 @@ function Home() {
 
   const fetchData = async () => {
     try {
-      // const responseTemp = await fetch('http://127.0.0.1:5001/api/v1/temperature-humidity');
-      const responseTemp = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity');
+      const responseTemp = await fetch('http://127.0.0.1:5001/api/smart-clock/temperature-humidity');
+      // const responseTemp = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity');
       if (!responseTemp.ok) {
         throw new Error('网络响应不正常');
       }
       const resultTemp = await responseTemp.json();
       setTempinfo(resultTemp);
 
-      // const responseHistory = await fetch('http://127.0.0.1:5001/api/v1/temperature-humidity/history');
-      const responseHistory = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity/history');
+      const responseHistory = await fetch('http://127.0.0.1:5001/api/smart-clock/temperature-humidity/history');
+      // const responseHistory = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity/history');
       if (!responseHistory.ok) {
         throw new Error('网络响应不正常');
       }
