@@ -22,8 +22,8 @@ export const SideBarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Color',
-        path: '/products',
+        title: 'Wallpaper',
+        path: '/ThemeModel',
         icon: <AiOutlineBgColors />,
         cName: 'nav-text'
     },

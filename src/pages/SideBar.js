@@ -22,8 +22,8 @@ function SideBar({ isShow, onIsShowChange, updateAppearance }) {
             updateAppearance({'theme': 'light'})
         } else if (innerTitle == 'DarkModel') {
             updateAppearance({'theme': 'dark'})
-        } else if (innerTitle == 'Color') {
-            updateAppearance({'textColor': 'red'})
+        } else if (innerTitle == 'Wallpaper') {
+            updateAppearance({'theme': 'wallpaper'})
         }
     }
     

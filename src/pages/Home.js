@@ -13,6 +13,10 @@ import TempHumiBoard from '../component/TempHumiBoard.jsx'
 
 import { AiOutlineSetting, AiOutlineMinus, AiOutlinePlus, AiOutlineFullscreen, AiOutlineFullscreenExit } from "react-icons/ai";
 
+import { fetchTempInfo, fetchTempHistory } from '../api/smartClockApi';
+import bg1 from '../assets/bg1.jpg';
+import bg2 from '../assets/bg2.jpeg';
+
 function Home() {
   const handle = useFullScreenHandle();
   const [fontsize, setFontsize] = useState('14rem');
@@ -21,25 +25,16 @@ function Home() {
   const [temphistory, setTemphistory] = useState(defaultTempTableData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [bgImg, setBgImg] = useState(); // 设置背景图片
 
-  const [appearance, setAppearance] = useState({});
+  // 设置默认主题
+  const [appearance, setAppearance] = useState({'theme': 'dark'});
 
   const fetchData = async () => {
     try {
-      const responseTemp = await fetch('http://127.0.0.1:5001/api/smart-clock/temperature-humidity');
-      // const responseTemp = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity');
-      if (!responseTemp.ok) {
-        throw new Error('网络响应不正常');
-      }
-      const resultTemp = await responseTemp.json();
+      const resultTemp = await fetchTempInfo();
       setTempinfo(resultTemp);
-
-      const responseHistory = await fetch('http://127.0.0.1:5001/api/smart-clock/temperature-humidity/history');
-      // const responseHistory = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity/history');
-      if (!responseHistory.ok) {
-        throw new Error('网络响应不正常');
-      }
-      const resultHis = await responseHistory.json();
+      const resultHis = await fetchTempHistory();
       const tempTableData = createTempData(resultHis);
       const humiTableData = createHumiData(resultHis);
       setTemphistory(tempTableData);
@@ -101,11 +96,24 @@ function Home() {
   }
 
   const updateAppearance = (newValue) => {
-    console.log("xxxx update appearance newValue: ", newValue)
+    if (newValue.theme === 'dark') {
+      document.documentElement.style.setProperty('--main-bg-color', '#282c34');
+      document.documentElement.style.setProperty('--main-text-color', '#ffffff');
+      setBgImg(); // 清除背景图片
+    } else if (newValue.theme === 'light') {
+      document.documentElement.style.setProperty('--main-bg-color', '#fafafa');
+      document.documentElement.style.setProperty('--main-text-color', '#1a1a1a');
+      setBgImg(); // 清除背景图片
+    } else if (newValue.theme === 'wallpaper') {
+      document.documentElement.style.setProperty('--main-bg-color', 'transparent');
+      setBgImg(bg2); // 设置背景图片
+    }
+    setAppearance(prev => ({ ...prev, ...newValue }));
   }
 
   return (
     <div className="Home">
+
       <div className='navbar'>
         <AiOutlinePlus onClick={increaseFontSize} />
         <AiOutlineMinus onClick={reduceFontSize} />
@@ -114,21 +122,35 @@ function Home() {
         <AiOutlineSetting onClick={handleSideBar} />
         <SideBar isShow={showSideBar} onIsShowChange={sideBarIsChanged} updateAppearance={updateAppearance}/>
       </div>
-      <div className='Home-Content'>
+
+      <div className='Home-Content'
+        
+      >
 
         <FullScreen className='FullScreen-Content' handle={handle}>
 
-          <DigitalClock fontSize={fontsize}></DigitalClock>
+          <div className='FullScreen-Container' 
+          style={{
+            backgroundImage: `url(${bgImg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
+            backgroundClip: 'border-box'
+          }}>
+            <DigitalClock fontSize={fontsize}></DigitalClock>
 
-          <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
+            <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
 
-          <div className='Chart'>
-            <Line className='Chart-Line' 
-            data={temphistory} 
-            options={tempEchartLineOptions} 
-            />
+            <div className='Chart-Container'>
+              <div className='Chart-Item'> 
+                <Line className='Chart-Canvas' 
+                data={temphistory} 
+                options={tempEchartLineOptions} 
+                />
+               </div>
+            </div>
           </div>
-
         </FullScreen>
 
       </div>
