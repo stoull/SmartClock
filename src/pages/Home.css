@@ -12,7 +12,7 @@
 
   .navbar{
     position: fixed;
-    top: 0;
+    top: 10px;
     left: 0;
     height: 60px;
     width: 100vw;
@@ -24,6 +24,15 @@
     background: var(--main-bg-color); /* 可选：加背景色防止透明 */
   }
   
+  .navbar svg {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    color: var(--main-text-color); /* 设置颜色 */
+    fill: var(--main-text-color); /* 用 fill 设置颜色 */
+  }
+
   .Home-Content {
     background-color: var(--main-bg-color);
     min-height: 10vh;

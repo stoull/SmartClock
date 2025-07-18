@@ -15,9 +15,10 @@
   }
   
   .nav-menu {
-    background-color: #282c34;
-    width: 250px;
-    height: 100vh;
+    color: var(--main-text-color);
+    background-color: var(--main-bg-color);
+    width: 200px;
+    height: 50vh;
     display: flex;
     margin-top: 42px;
     justify-content: center;
@@ -25,10 +26,12 @@
     top: 0;
     right: -100%;
     transition: 850ms;
+    backdrop-filter: blur(60px);
+    border-radius: 16px;
   }
   
   .nav-menu.active {
-    right: 0;
+    right: 6px;
     transition: 350ms;
   }
   
@@ -36,10 +39,10 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 0px 0px 0px 16px;
+    padding: 0px 0px 0px 6px;
     list-style: none;
-    height: 60px;
-    color: #8B8B8B;
+    height: 44px;
+    color: var(--main-text-color);
   }
   
   .nav-text a {
@@ -50,7 +53,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 0 6px;
     border-radius: 4px;
   }
   
@@ -59,7 +62,11 @@
   }
   
   .nav-menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     width: 100%;
+    padding: 0;
   }
   
   .navbar-toggle {
@@ -72,5 +79,5 @@
   }
   
   span {
-    margin-left: 16px;
+    margin-left: 6px;
   }

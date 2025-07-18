@@ -14,7 +14,6 @@ import TempHumiBoard from '../component/TempHumiBoard.jsx'
 import { AiOutlineSetting, AiOutlineMinus, AiOutlinePlus, AiOutlineFullscreen, AiOutlineFullscreenExit } from "react-icons/ai";
 
 import { fetchTempInfo, fetchTempHistory } from '../api/smartClockApi';
-import bg1 from '../assets/bg1.jpg';
 import bg2 from '../assets/bg2.jpeg';
 
 function Home() {
@@ -57,6 +56,7 @@ function Home() {
   }, []);
 
   const increaseFontSize = () => {
+    window.getSelection().removeAllRanges();
     setFontsize( preSize => {
       let preInt = parseInt(preSize)
       preInt = preInt > 1 ? preInt : 1;
@@ -71,6 +71,7 @@ function Home() {
   };
 
   const reduceFontSize = () => {
+    window.getSelection().removeAllRanges();
     setFontsize( preSize => {
       let preInt = parseInt(preSize)
       preInt = preInt > 2 ? preInt : 2;
@@ -95,6 +96,15 @@ function Home() {
     setShowSideBar(newValue)
   }
 
+  const handleFullScreen = (handle) => {
+    window.getSelection().removeAllRanges(); // 退出全屏时清除选中
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  }
+
   const updateAppearance = (newValue) => {
     if (newValue.theme === 'dark') {
       document.documentElement.style.setProperty('--main-bg-color', '#282c34');
@@ -106,6 +116,7 @@ function Home() {
       setBgImg(); // 清除背景图片
     } else if (newValue.theme === 'wallpaper') {
       document.documentElement.style.setProperty('--main-bg-color', 'transparent');
+      document.documentElement.style.setProperty('--main-text-color', '#ffffff');
       setBgImg(bg2); // 设置背景图片
     }
     setAppearance(prev => ({ ...prev, ...newValue }));
@@ -114,20 +125,20 @@ function Home() {
   return (
     <div className="Home">
 
-      <div className='navbar'>
-        <AiOutlinePlus onClick={increaseFontSize} />
-        <AiOutlineMinus onClick={reduceFontSize} />
-        <AiOutlineFullscreen onClick={handle.enter} />
-
-        <AiOutlineSetting onClick={handleSideBar} />
-        <SideBar isShow={showSideBar} onIsShowChange={sideBarIsChanged} updateAppearance={updateAppearance}/>
-      </div>
-
-      <div className='Home-Content'
-        
-      >
+      <div className='Home-Content'>
 
         <FullScreen className='FullScreen-Content' handle={handle}>
+
+          <div className='navbar'>
+            <AiOutlinePlus onClick={increaseFontSize} />
+            <AiOutlineMinus onClick={reduceFontSize} />
+            {handle.active
+              ? <AiOutlineFullscreenExit onClick={() => handleFullScreen(handle)} />
+              : <AiOutlineFullscreen onClick={() => handleFullScreen(handle)} />
+            }
+            <AiOutlineSetting onClick={handleSideBar} />
+            <SideBar isShow={showSideBar} onIsShowChange={sideBarIsChanged} updateAppearance={updateAppearance}/>
+          </div>
 
           <div className='FullScreen-Container' 
           style={{
