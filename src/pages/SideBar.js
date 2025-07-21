@@ -1,6 +1,6 @@
 import './SideBar.css';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SideBarData } from './SideBarData';
 
 function SideBar({ isShow, onIsShowChange, updateAppearance }) {
