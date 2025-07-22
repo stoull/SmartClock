@@ -6,6 +6,8 @@ import { Line } from "react-chartjs-2";
 import { defaultTempTableData, historyEchartLineOptions, createTempHistoryData, createHumiData } from '../model/Data.js';
 import {formatDate, subtractHours } from '../tools/tools.js';
 
+import { BASE_URL, API_PATHS } from '../api/smartClockApi';
+
 export function Analyse() {
     const [histories, setHistories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -39,7 +41,7 @@ export function Analyse() {
             const eDate = subtractHours(endDate, 24*i);
             const formattedStartDate = formatDate(sDate);
             const formattedEndDate = formatDate(eDate);
-            const url = `http://hutpi.local:5001/api/smart-clock/surroundings/history?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
+            const url = `${BASE_URL}${API_PATHS.surroundingsHistory}?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
             urls.push(url);
         }
 

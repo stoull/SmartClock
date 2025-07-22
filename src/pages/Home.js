@@ -1,6 +1,6 @@
 
 import './Home.css';
-import React, {useCallback, useState, useEffect} from "react";
+import {useCallback, useState, useEffect} from "react";
 
 import Chart from 'chart.js/auto';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -8,10 +8,14 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Line } from "react-chartjs-2";
 import DigitalClock from '../component/DigitalClock.jsx';
 import SideBar from './SideBar.js';
+import DailyGadgets from './DailyGadgets.js';
 import { defaultTempInfo, defaultTempTableData, defaultHumiTableData, createTempData, createHumiData, tempEchartLineOptions } from '../model/Data.js';
 import TempHumiBoard from '../component/TempHumiBoard.jsx'
 
 import { AiOutlineSetting, AiOutlineMinus, AiOutlinePlus, AiOutlineFullscreen, AiOutlineFullscreenExit } from "react-icons/ai";
+
+import { fetchTempInfo, fetchTempHistory } from '../api/smartClockApi';
+import bg2 from '../assets/bg/bg2.jpeg';
 
 function Home() {
   const handle = useFullScreenHandle();
@@ -21,25 +25,17 @@ function Home() {
   const [temphistory, setTemphistory] = useState(defaultTempTableData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [bgImg, setBgImg] = useState(); // 设置背景图片
+  const [showBottomPanel, setShowBottomPanel] = useState(true);
 
-  const [appearance, setAppearance] = useState({});
+  // 设置默认主题
+  const [appearance, setAppearance] = useState({'theme': 'dark'});
 
   const fetchData = async () => {
     try {
-      const responseTemp = await fetch('http://127.0.0.1:5001/api/smart-clock/temperature-humidity');
-      // const responseTemp = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity');
-      if (!responseTemp.ok) {
-        throw new Error('网络响应不正常');
-      }
-      const resultTemp = await responseTemp.json();
+      const resultTemp = await fetchTempInfo();
       setTempinfo(resultTemp);
-
-      const responseHistory = await fetch('http://127.0.0.1:5001/api/smart-clock/temperature-humidity/history');
-      // const responseHistory = await fetch('http://hutpi.local:5001/api/smart-clock/temperature-humidity/history');
-      if (!responseHistory.ok) {
-        throw new Error('网络响应不正常');
-      }
-      const resultHis = await responseHistory.json();
+      const resultHis = await fetchTempHistory();
       const tempTableData = createTempData(resultHis);
       const humiTableData = createHumiData(resultHis);
       setTemphistory(tempTableData);
@@ -50,11 +46,30 @@ function Home() {
     }
   };
 
+  const changeTheme = () => {
+    const date = new Date();
+    let hours = date.getHours();
+    console.log("currentHours", hours);
+    if (hours >= 7 && hours < 20) {
+      updateAppearance({'theme': 'light'});
+    } else {
+      updateAppearance({'theme': 'dark'});
+    }
+
+    if (hours >= 6 && hours < 22) {
+      setShowBottomPanel(true);
+    } else {
+      setShowBottomPanel(false);
+    }
+  }
+
   useEffect(() => {
     fetchData()
+    changeTheme()
     // 创建一个定时器
     const intervalId = setInterval(() => {
       fetchData()
+      changeTheme()
     }, 180000); // 每6分钟）360000
 
     // 清理定时器
@@ -62,30 +77,30 @@ function Home() {
   }, []);
 
   const increaseFontSize = () => {
+    window.getSelection().removeAllRanges();
     setFontsize( preSize => {
-      let preInt = parseInt(preSize)
-      preInt = preInt > 1 ? preInt : 1;
+      let preInt = parseFloat(preSize)
       return `${preInt+1}rem`
     });
 
     setFontsizeTemp( preSize => {
-      let preInt = parseInt(preSize)
-      preInt = preInt > 1 ? preInt : 1;
-      return `${preInt+1}rem`
+      let preInt = parseFloat(preSize)
+      return `${preInt+0.25}rem`
     })
   };
 
   const reduceFontSize = () => {
+    window.getSelection().removeAllRanges();
     setFontsize( preSize => {
-      let preInt = parseInt(preSize)
-      preInt = preInt > 2 ? preInt : 2;
+      let preInt = parseFloat(preSize)
+      preInt = preInt > 2.0 ? preInt : 2.0;
       return `${preInt-1}rem`
     });
 
     setFontsizeTemp( preSize => {
-      let preInt = parseInt(preSize)
-      preInt = preInt > 2 ? preInt : 2;
-      return `${preInt-1}rem`
+      let preInt = parseFloat(preSize)
+      preInt = preInt > 1.0 ? preInt : 1.0;
+      return `${preInt-0.25}rem`
     })
   };
 
@@ -100,35 +115,80 @@ function Home() {
     setShowSideBar(newValue)
   }
 
+  const handleFullScreen = (handle) => {
+    window.getSelection().removeAllRanges(); // 退出全屏时清除选中
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  }
+
   const updateAppearance = (newValue) => {
-    console.log("xxxx update appearance newValue: ", newValue)
+    if (newValue.theme === 'dark') {
+      document.documentElement.style.setProperty('--main-bg-color', '#282c34');
+      document.documentElement.style.setProperty('--main-text-color', '#ffffff');
+      setBgImg(); // 清除背景图片
+    } else if (newValue.theme === 'light') {
+      document.documentElement.style.setProperty('--main-bg-color', '#fafafa');
+      document.documentElement.style.setProperty('--main-text-color', '#1a1a1a');
+      setBgImg(); // 清除背景图片
+    } else if (newValue.theme === 'wallpaper') {
+      document.documentElement.style.setProperty('--main-bg-color', 'transparent');
+      document.documentElement.style.setProperty('--main-text-color', '#ffffff');
+      setBgImg(bg2); // 设置背景图片
+    }
+    setAppearance(prev => ({ ...prev, ...newValue }));
   }
 
   return (
     <div className="Home">
-      <div className='navbar'>
-        <AiOutlinePlus onClick={increaseFontSize} />
-        <AiOutlineMinus onClick={reduceFontSize} />
-        <AiOutlineFullscreen onClick={handle.enter} />
 
-        <AiOutlineSetting onClick={handleSideBar} />
-        <SideBar isShow={showSideBar} onIsShowChange={sideBarIsChanged} updateAppearance={updateAppearance}/>
-      </div>
       <div className='Home-Content'>
 
         <FullScreen className='FullScreen-Content' handle={handle}>
 
-          <DigitalClock fontSize={fontsize}></DigitalClock>
-
-          <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
-
-          <div className='Chart'>
-            <Line className='Chart-Line' 
-            data={temphistory} 
-            options={tempEchartLineOptions} 
-            />
+          <div className='navbar'>
+            <AiOutlinePlus onClick={increaseFontSize} />
+            <AiOutlineMinus onClick={reduceFontSize} />
+            {handle.active
+              ? <AiOutlineFullscreenExit onClick={() => handleFullScreen(handle)} />
+              : <AiOutlineFullscreen onClick={() => handleFullScreen(handle)} />
+            }
+            <AiOutlineSetting onClick={handleSideBar} />
+            <SideBar isShow={showSideBar} onIsShowChange={sideBarIsChanged} updateAppearance={updateAppearance}/>
           </div>
 
+          <div className='FullScreen-Container' 
+          style={{
+            backgroundImage: `url(${bgImg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
+            backgroundClip: 'border-box'
+          }}>
+            <DigitalClock fontSize={fontsize}></DigitalClock>
+            <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
+
+            <div className='Chart-Container'>
+              <div className='Chart-Item'> 
+                <Line className='Chart-Canvas' 
+                data={temphistory} 
+                options={tempEchartLineOptions}
+                />
+               </div>
+            </div>
+
+            <DailyGadgets />
+
+            {/* 当主题为light时显示的特殊div */}
+            {appearance.theme === 'light' && (
+              <div className="bottom-container">
+
+              </div>
+            )}
+          </div>
         </FullScreen>
 
       </div>

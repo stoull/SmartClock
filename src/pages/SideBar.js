@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { AiOutlineSetting } from "react-icons/ai";
-import { SideBarData } from './SideBarData';
 import './SideBar.css';
+
+import { useEffect, useState } from 'react';
+import { SideBarData } from './SideBarData';
 
 function SideBar({ isShow, onIsShowChange, updateAppearance }) {
     const [show, setShow] = useState(false);
@@ -16,14 +16,14 @@ function SideBar({ isShow, onIsShowChange, updateAppearance }) {
     };
     const sideMenuAction = (event) => {
         const targetElement = event.target;
-        const key_value = event.target.getAttribute('data-index');
+        // const key_value = event.target.getAttribute('data-index');
         const innerTitle = targetElement.innerText;
-        if (innerTitle == 'LightModel') {
+        if (innerTitle === 'LightModel') {
             updateAppearance({'theme': 'light'})
-        } else if (innerTitle == 'DarkModel') {
+        } else if (innerTitle === 'DarkModel') {
             updateAppearance({'theme': 'dark'})
-        } else if (innerTitle == 'Color') {
-            updateAppearance({'textColor': 'red'})
+        } else if (innerTitle === 'Wallpaper') {
+            updateAppearance({'theme': 'wallpaper'})
         }
     }
     
