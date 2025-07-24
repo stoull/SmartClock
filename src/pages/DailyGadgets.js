@@ -84,20 +84,21 @@ function DailyGadgets(props) {
 
     return (
         <div className='DailyGadgets'>
-            <div className="quote-row">
-                <h2>{displayQuote}</h2>
-                <span>—{displayQuoteAuthor}</span>
+            <div className="image-container">
+                <img 
+                    src={currentImage} 
+                    className="everyday-image" 
+                    alt="everyday image"
+                    onClick={refreshRandomContent}
+                    style={{ cursor: 'pointer' }}
+                    title="Click to refresh random content"
+                />
             </div>
-            <div className='section2'>
-                <div className="image-container">
-                    <img 
-                        src={currentImage} 
-                        className="everyday-image" 
-                        alt="everyday image"
-                        onClick={refreshRandomContent}
-                        style={{ cursor: 'pointer' }}
-                        title="Click to refresh random content"
-                    />
+
+            <div className='quote'>
+                <div className="quote-row">
+                    <h2>{displayQuote}</h2>
+                    <span>—{displayQuoteAuthor}</span>
                 </div>
                 {currentMessage && <p>{currentMessage}</p>}
             </div>
