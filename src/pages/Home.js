@@ -31,6 +31,11 @@ function Home() {
   // 设置默认主题
   const [appearance, setAppearance] = useState({'theme': 'dark'});
 
+  let hourlyTimeoutId = null;
+  let hourlyIntervalId = null;
+  let dataFetchIntervalId = null;
+
+
   const fetchData = async () => {
     try {
       const resultTemp = await fetchTempInfo();
@@ -47,12 +52,12 @@ function Home() {
   };
 
   const autoChangeToDarkTheme = () => {
+    // 确保这个方法每个小时执行一次
     const date = new Date();
     let hours = date.getHours();
-    console.log("currentHours", hours);
-    if (hours >= 7 && hours < 20) {
-      updateAppearance({'theme': 'light', 'isAutoChange': true});
-    } else {
+    if (hours === 7) {
+      updateAppearance({'theme': appearance.theme, 'isAutoChange': true});
+    } else if (hours === 20) {
       updateAppearance({'theme': 'dark', 'isAutoChange': true});
     }
 
@@ -65,16 +70,48 @@ function Home() {
 
   useEffect(() => {
     fetchData()
-    autoChangeToDarkTheme()
     // 创建一个定时器
-    const intervalId = setInterval(() => {
+    dataFetchIntervalId = setInterval(() => {
       fetchData()
-      autoChangeToDarkTheme()
     }, 180000); // 每6分钟）360000
-
+    runHourly();
     // 清理定时器
-    return () => clearInterval(intervalId);
+    return () => cleanupTimers();
   }, []);
+
+  function runHourly() {
+    const now = new Date();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const milliseconds = now.getMilliseconds();
+
+    // 计算距离下一个整点还有多少毫秒
+    const delayUntilNextHour = (60 - minutes) * 60 * 1000 - seconds * 1000 - milliseconds;;
+    
+    // 先等待到下一个整点
+    hourlyTimeoutId = setTimeout(() => {
+      // 执行第一次任务
+      autoChangeToDarkTheme();
+      
+      // 然后每小时执行一次
+      hourlyIntervalId = setInterval(autoChangeToDarkTheme, 60 * 60 * 1000);
+    }, delayUntilNextHour);
+  }
+
+  function cleanupTimers() {
+    if (hourlyTimeoutId) {
+      clearTimeout(hourlyTimeoutId);
+      hourlyTimeoutId = null;
+    }
+    if (hourlyIntervalId) {
+      clearInterval(hourlyIntervalId);
+      hourlyIntervalId = null;
+    }
+    if (dataFetchIntervalId) {
+      clearInterval(dataFetchIntervalId);
+      dataFetchIntervalId = null;
+    }
+  }
 
   const increaseFontSize = () => {
     window.getSelection().removeAllRanges();
@@ -138,7 +175,7 @@ function Home() {
       document.documentElement.style.setProperty('--main-text-color', '#ffffff');
       setBgImg(bg2); // 设置背景图片
     }
-    if (!newValue.isAutoChange) {
+    if (newValue.isAutoChange == false) {
       setAppearance(prev => ({ ...prev, ...newValue }));
     }
   }
