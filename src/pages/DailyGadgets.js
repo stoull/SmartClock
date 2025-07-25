@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 
 import Quotes from '../assets/Quotes-Favorites.json';
 
+import './Home.css';
+import { Line } from "react-chartjs-2";
+
 // 动态导入所有图片
 const importImages = () => {
   const images = {};
@@ -45,7 +48,7 @@ function getRandomImage() {
 
 function DailyGadgets(props) {
     // 直接解构props中的属性
-    const { imageSrc, quote, quoteAuthor, message } = props;
+    const { imageSrc, quote, quoteAuthor, message,  temphistory, tempEchartLineOptions} = props;
 
     // 随机选取quote和图片
     const randomQuote = getRandomQuote();
@@ -83,26 +86,37 @@ function DailyGadgets(props) {
     };
 
     return (
-        <div className='DailyGadgets'>
-            <div className="image-container">
-                <img 
-                    src={currentImage} 
-                    className="everyday-image" 
-                    alt="everyday image"
-                    onClick={refreshRandomContent}
-                    style={{ cursor: 'pointer' }}
-                    title="Click to refresh random content"
-                />
+        <div>
+            <div className="quote-row">
+                <h2>{displayQuote}</h2>
+                <span>—{displayQuoteAuthor}</span>
             </div>
-
-            <div className='quote'>
-                <div className="quote-row">
-                    <h2>{displayQuote}</h2>
-                    <span>—{displayQuoteAuthor}</span>
+            <div className='DailyGadgets'>
+                <div className="image-container">
+                    <img 
+                        src={currentImage} 
+                        className="everyday-image" 
+                        alt="everyday image"
+                        onClick={refreshRandomContent}
+                        style={{ cursor: 'pointer' }}
+                        title="Click to refresh random content"
+                    />
                 </div>
-                {currentMessage && <p>{currentMessage}</p>}
+
+                <div className='quote'>
+                    <div className='Chart-Container'>
+                        <div className='Chart-Item'> 
+                        <Line className='Chart-Canvas' 
+                        data={temphistory} 
+                        options={tempEchartLineOptions}
+                        />
+                        </div>
+                    </div>
+                    {currentMessage && <p>{currentMessage}</p>}
+                </div>
             </div>
         </div>
+        
     )
 }
 

@@ -79,7 +79,7 @@ body {
     flex-direction: column;
     align-items: center;
     color: var(--main-text-color);
-    gap: 0;
+    gap: 12px;
   }
 
   .Mechanical-Clock {
@@ -109,22 +109,23 @@ body {
     height: 220px; /* 或者其他固定高度，比如 250px */
     justify-content: flex-start;
     align-items: center;
-    margin: auto;
+    margin: 0;
+    flex-shrink: 0;
   }
 
   .Chart-Item {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 220px;
+    height: 100%;
     justify-content: flex-start;
     align-items: center;
   }
 
   .Chart-Canvas {
     display: flex;
-    width: 100vw;
-    height: 220px;
+    width: 100%;
+    height: 100%;
   }
   
   /* body{
@@ -240,15 +241,4 @@ body {
       transform: scale(1); /* Scale back to original */
       opacity: 1
     }
-  }
-
-  .bottom-container {
-    flex: 1; /* 占据剩余空间 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 0px;
-    margin-top: 0px;
-    min-height: 0; /* 防止内容溢出 */
   }

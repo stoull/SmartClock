@@ -19,11 +19,11 @@ function SideBar({ isShow, onIsShowChange, updateAppearance }) {
         // const key_value = event.target.getAttribute('data-index');
         const innerTitle = targetElement.innerText;
         if (innerTitle === 'LightModel') {
-            updateAppearance({'theme': 'light'})
+            updateAppearance({'theme': 'light', 'isAutoChange': false});
         } else if (innerTitle === 'DarkModel') {
-            updateAppearance({'theme': 'dark'})
+            updateAppearance({'theme': 'dark', 'isAutoChange': false});
         } else if (innerTitle === 'Wallpaper') {
-            updateAppearance({'theme': 'wallpaper'})
+            updateAppearance({'theme': 'wallpaper', 'isAutoChange': false});
         }
     }
     

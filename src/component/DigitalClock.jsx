@@ -15,7 +15,7 @@ function DigitalClock({ fontSize }){
 
         setDayFontSize( preSize => {
             let preInt = parseInt(fontSize)
-            preInt = preInt > 1 ? preInt : 1;
+            preInt = preInt > 4 ? preInt : 4;
             return `${preInt-3}rem`
         })
 
@@ -84,7 +84,7 @@ function DigitalClock({ fontSize }){
                 <span className='clock' style={{ fontSize: titleFontSize }}>{timeInfo.hours}</span>
                 <span className='clock-dot' style={{ fontSize: titleFontSize }}>:</span>
                 <span className='clock' style={{ fontSize: titleFontSize }}>{timeInfo.minutes}</span>
-                <span className='clock' style={{ fontSize: dayFontSize, margin: 'auto 0 auto 120px'}}>{timeInfo.dayOfWeekDay}</span>
+                <span className='clock-day' style={{ fontSize: dayFontSize}}>{timeInfo.dayOfWeekDay}</span>
             </div>
         </div>
     );

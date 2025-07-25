@@ -46,14 +46,14 @@ function Home() {
     }
   };
 
-  const changeTheme = () => {
+  const autoChangeToDarkTheme = () => {
     const date = new Date();
     let hours = date.getHours();
     console.log("currentHours", hours);
     if (hours >= 7 && hours < 20) {
-      updateAppearance({'theme': 'light'});
+      updateAppearance({'theme': 'light', 'isAutoChange': true});
     } else {
-      updateAppearance({'theme': 'dark'});
+      updateAppearance({'theme': 'dark', 'isAutoChange': true});
     }
 
     if (hours >= 6 && hours < 22) {
@@ -65,11 +65,11 @@ function Home() {
 
   useEffect(() => {
     fetchData()
-    changeTheme()
+    autoChangeToDarkTheme()
     // 创建一个定时器
     const intervalId = setInterval(() => {
       fetchData()
-      changeTheme()
+      autoChangeToDarkTheme()
     }, 180000); // 每6分钟）360000
 
     // 清理定时器
@@ -138,7 +138,9 @@ function Home() {
       document.documentElement.style.setProperty('--main-text-color', '#ffffff');
       setBgImg(bg2); // 设置背景图片
     }
-    setAppearance(prev => ({ ...prev, ...newValue }));
+    if (!newValue.isAutoChange) {
+      setAppearance(prev => ({ ...prev, ...newValue }));
+    }
   }
 
   return (
@@ -171,23 +173,16 @@ function Home() {
             <DigitalClock fontSize={fontsize}></DigitalClock>
             <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
 
-            <div className='Chart-Container'>
+            {/* <div className='Chart-Container'>
               <div className='Chart-Item'> 
                 <Line className='Chart-Canvas' 
                 data={temphistory} 
                 options={tempEchartLineOptions}
                 />
                </div>
-            </div>
+            </div> */}
 
-            <DailyGadgets />
-
-            {/* 当主题为light时显示的特殊div */}
-            {appearance.theme === 'light' && (
-              <div className="bottom-container">
-
-              </div>
-            )}
+            <DailyGadgets temphistory={temphistory}  tempEchartLineOptions={tempEchartLineOptions}/>
           </div>
         </FullScreen>
 

@@ -21,8 +21,8 @@
   justify-content: center;
   align-items: center;
   gap: 0;
-  min-height: 0;
-  flex: 6;
+  height: 100%;
+  flex: 5;
   overflow: hidden; /* 防止内容溢出 */
 }
 
@@ -45,12 +45,12 @@
   display: flex;
   position: relative;
   align-items: center;
-  flex: 4;
+  flex: 5;
 }
 
 .everyday-image {
-  width: auto;
-  height: 100%;
+  width: 100%;
+  height: auto;
   aspect-ratio: 640/416;
   object-fit: cover;
   display: block;
@@ -72,16 +72,20 @@
 .quote-row {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 8px; /* 可选，控制间距 */
 }
 
 .quote-row h2 {
   margin: 0;
+  text-align: center;
+  position: relative;
 }
 
 .quote-row span {
-  padding: 0 20px;
   font-weight: bold;
   font-size: 0.8rem; /* 可根据需要调整 */
+  position: relative;
+  left: 50%;
+  transform: translateX(-100%);
 }
