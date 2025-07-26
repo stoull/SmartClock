@@ -27,6 +27,7 @@ function Home() {
   const [error, setError] = useState(null);
   const [bgImg, setBgImg] = useState(); // 设置背景图片
   const [showBottomPanel, setShowBottomPanel] = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // 用于触发DailyGadgets刷新
 
   // 设置默认主题
   const [appearance, setAppearance] = useState({'theme': 'dark'});
@@ -57,8 +58,12 @@ function Home() {
     let hours = date.getHours();
     if (hours === 7) {
       updateAppearance({'theme': appearance.theme, 'isAutoChange': true});
+      setFontsize('10rem'); 
+      setFontsizeTemp('3rem');
     } else if (hours === 20) {
       updateAppearance({'theme': 'dark', 'isAutoChange': true});
+      setFontsize('14rem');
+      setFontsizeTemp('4rem');
     }
 
     if (hours >= 6 && hours < 22) {
@@ -66,6 +71,9 @@ function Home() {
     } else {
       setShowBottomPanel(false);
     }
+
+    // 每小时触发DailyGadgets刷新随机内容
+    setRefreshTrigger(prev => prev + 1);
   }
 
   useEffect(() => {
@@ -210,16 +218,20 @@ function Home() {
             <DigitalClock fontSize={fontsize}></DigitalClock>
             <TempHumiBoard tempInfo = { tempinfo } fontSize={fontsizeTemp} />
 
-            {/* <div className='Chart-Container'>
+            <div className='Chart-Container'>
               <div className='Chart-Item'> 
                 <Line className='Chart-Canvas' 
                 data={temphistory} 
                 options={tempEchartLineOptions}
                 />
                </div>
-            </div> */}
+            </div>
 
-            <DailyGadgets temphistory={temphistory}  tempEchartLineOptions={tempEchartLineOptions}/>
+            <DailyGadgets 
+              temphistory={temphistory}  
+              tempEchartLineOptions={tempEchartLineOptions}
+              refreshTrigger={refreshTrigger}
+            />
           </div>
         </FullScreen>
 

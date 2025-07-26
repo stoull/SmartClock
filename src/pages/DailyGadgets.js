@@ -48,7 +48,7 @@ function getRandomImage() {
 
 function DailyGadgets(props) {
     // 直接解构props中的属性
-    const { imageSrc, quote, quoteAuthor, message,  temphistory, tempEchartLineOptions} = props;
+    const { imageSrc, quote, quoteAuthor, message, temphistory, tempEchartLineOptions, refreshTrigger } = props;
 
     // 随机选取quote和图片
     const randomQuote = getRandomQuote();
@@ -75,6 +75,13 @@ function DailyGadgets(props) {
         if (message) setCurrentMessage(message);
     }, [quote, quoteAuthor, imageSrc, message]);
 
+    // 监听refreshTrigger变化，触发随机内容刷新
+    useEffect(() => {
+        if (refreshTrigger > 0) {
+            refreshRandomContent();
+        }
+    }, [refreshTrigger]);
+
     // 刷新随机内容的函数
     const refreshRandomContent = () => {
         const newQuote = getRandomQuote();
@@ -87,13 +94,9 @@ function DailyGadgets(props) {
 
     return (
         <div>
-            <div className="quote-row">
-                <h2>{displayQuote}</h2>
-                <span>—{displayQuoteAuthor}</span>
-            </div>
             <div className='DailyGadgets'>
                 <div className="image-container">
-                    <img 
+                    <img
                         src={currentImage} 
                         className="everyday-image" 
                         alt="everyday image"
@@ -102,15 +105,10 @@ function DailyGadgets(props) {
                         title="Click to refresh random content"
                     />
                 </div>
-
                 <div className='quote'>
-                    <div className='Chart-Container'>
-                        <div className='Chart-Item'> 
-                        <Line className='Chart-Canvas' 
-                        data={temphistory} 
-                        options={tempEchartLineOptions}
-                        />
-                        </div>
+                    <div className="quote-row">
+                        <h2>{displayQuote}</h2>
+                        <span>—{displayQuoteAuthor}</span>
                     </div>
                     {currentMessage && <p>{currentMessage}</p>}
                 </div>
