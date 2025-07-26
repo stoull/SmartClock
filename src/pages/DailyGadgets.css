@@ -46,11 +46,12 @@
   display: flex;
   position: relative;
   align-items: center;
-  flex: 4;
+  flex: 3;
 }
 
 .everyday-image {
   width: 100%;
+  max-width: 420px;
   height: auto;
   aspect-ratio: 640/416;
   object-fit: cover;

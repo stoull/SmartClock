@@ -80,7 +80,7 @@ function DigitalClock({ fontSize }){
 
     return(
         <div className="clock-container">
-            <div className="clock">
+            <div className="clock-blur">
                 <span className='clock' style={{ fontSize: titleFontSize }}>{timeInfo.hours}</span>
                 <span className='clock-dot' style={{ fontSize: titleFontSize }}>:</span>
                 <span className='clock' style={{ fontSize: titleFontSize }}>{timeInfo.minutes}</span>

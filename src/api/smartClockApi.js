@@ -2,8 +2,8 @@
 
 
 
-export const BASE_URL = 'http://127.0.0.1:5001/api/smart-clock';
-// export const BASE_URL = 'http://hutpi.local:5001/api/smart-clock';
+// export const BASE_URL = 'http://127.0.0.1:5001/api/smart-clock';
+export const BASE_URL = 'http://hutpi.local:5001/api/smart-clock';
 
 
 export const API_PATHS = {

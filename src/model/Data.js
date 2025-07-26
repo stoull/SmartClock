@@ -36,6 +36,11 @@ export const defaultTempInfo = {
             }
           }
       }
+    },
+    plugins: {
+      legend: {
+        display: false // 隐藏label 温度(˚C) 湿度(%)的显示
+      }
     }
   }
 
@@ -62,6 +67,11 @@ export const defaultTempInfo = {
               return `${value} ˚C`
             }
           }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false // 隐藏label 温度(˚C) 湿度(%)的显示
       }
     }
   }
@@ -117,7 +127,7 @@ export const defaultTempInfo = {
           yAxisID: 'y1'
         },
         {
-          label: "湿度(%)",
+          label: "湿度()",
           data: response.humi,
           fill: false,
           borderColor: "#99DCDC",
