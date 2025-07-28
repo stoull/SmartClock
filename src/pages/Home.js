@@ -58,12 +58,12 @@ function Home() {
     let hours = date.getHours();
     if (hours === 7) {
       updateAppearance({'theme': appearance.theme, 'isAutoChange': true});
-      setFontsize('10rem'); 
-      setFontsizeTemp('3rem');
+      setFontsize('13rem'); 
+      setFontsizeTemp('3.75rem');
     } else if (hours === 20) {
       updateAppearance({'theme': 'dark', 'isAutoChange': true});
-      setFontsize('14rem');
-      setFontsizeTemp('4rem');
+      setFontsize('16rem');
+      setFontsizeTemp('4.5rem');
     }
 
     if (hours >= 6 && hours < 22) {
@@ -227,11 +227,11 @@ function Home() {
                </div>
             </div>
 
-            <DailyGadgets 
+            { showBottomPanel ? (<DailyGadgets 
               temphistory={temphistory}  
               tempEchartLineOptions={tempEchartLineOptions}
               refreshTrigger={refreshTrigger}
-            />
+            />) : (<p>Good night, have a nice dream!</p>) }
           </div>
         </FullScreen>
 

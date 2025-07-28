@@ -110,6 +110,7 @@
   font-size: 7rem;
   font-weight: bold;
   text-align: center;
+  line-height: 0.8;
 }
 
 .clock-blur{
@@ -126,19 +127,19 @@
 .clock {
   margin: 0;
   padding: 0;
-  line-height: 1;
+  line-height: 0.8;
 }
 
 .clock-dot {
   backdrop-filter: blur(5px);
   text-shadow: 3px 3px 5px hsla(0, 0%, 0%, 0.75);
   animation: breath-animation 2s infinite ease-in;
-  line-height: 1;
+  line-height: 0.8;
 }
 
 .clock-day {
   padding: 0 0 0 60px;
-  line-height: 1;
+  line-height: 0.8;
 }
 
 .Temp-humi-board {
