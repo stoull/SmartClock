@@ -19,8 +19,8 @@ import bg2 from '../assets/bg/bg2.jpeg';
 
 function Home() {
   const handle = useFullScreenHandle();
-  const [fontsize, setFontsize] = useState('14rem');
-  const [fontsizeTemp, setFontsizeTemp] = useState('4rem');
+  const [fontsize, setFontsize] = useState('16rem');
+  const [fontsizeTemp, setFontsizeTemp] = useState('4.5rem');
   const [tempinfo, setTempinfo] = useState(defaultTempInfo);
   const [temphistory, setTemphistory] = useState(defaultTempTableData);
   const [loading, setLoading] = useState(true);
@@ -58,8 +58,8 @@ function Home() {
     let hours = date.getHours();
     if (hours === 7) {
       updateAppearance({'theme': appearance.theme, 'isAutoChange': true});
-      setFontsize('13rem'); 
-      setFontsizeTemp('3.75rem');
+      setFontsize('14rem'); 
+      setFontsizeTemp('4rem');
     } else if (hours === 20) {
       updateAppearance({'theme': 'dark', 'isAutoChange': true});
       setFontsize('16rem');
