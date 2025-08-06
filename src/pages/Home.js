@@ -31,6 +31,7 @@ function Home() {
 
   // 设置默认主题
   const [appearance, setAppearance] = useState({'theme': 'dark'});
+  let cacheddayTheme = 'dark';
 
   let hourlyTimeoutId = null;
   let hourlyIntervalId = null;
@@ -170,6 +171,12 @@ function Home() {
   }
 
   const updateAppearance = (newValue) => {
+    if (newValue.isAutoChange == false) {
+      cacheddayTheme = newValue.theme;
+      setAppearance(prev => ({ ...prev, ...newValue }));
+    } else {
+      newValue.theme = cacheddayTheme;
+    }
     if (newValue.theme === 'dark') {
       document.documentElement.style.setProperty('--main-bg-color', '#282c34');
       document.documentElement.style.setProperty('--main-text-color', '#ffffff');
@@ -182,9 +189,6 @@ function Home() {
       document.documentElement.style.setProperty('--main-bg-color', 'transparent');
       document.documentElement.style.setProperty('--main-text-color', '#ffffff');
       setBgImg(bg2); // 设置背景图片
-    }
-    if (newValue.isAutoChange == false) {
-      setAppearance(prev => ({ ...prev, ...newValue }));
     }
   }
 
@@ -227,8 +231,8 @@ function Home() {
                </div>
             </div>
 
-            { showBottomPanel ? (<DailyGadgets 
-              temphistory={temphistory}  
+            { showBottomPanel ? (<DailyGadgets
+              temphistory={temphistory}
               tempEchartLineOptions={tempEchartLineOptions}
               refreshTrigger={refreshTrigger}
             />) : (<p>Good night, have a nice dream!</p>) }

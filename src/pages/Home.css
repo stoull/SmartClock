@@ -106,7 +106,7 @@ body {
     flex-direction: column;
     gap: 0;
     width: 95%;
-    height: 160px; /* 或者其他固定高度，比如 250px */
+    height: 180px; /* 或者其他固定高度，比如 250px */
     justify-content: flex-start;
     align-items: center;
     margin: 0;
@@ -147,7 +147,7 @@ body {
     flex-direction: row;
     justify-content: center;
     gap: 0;
-    margin: 14px 0 0 0;
+    margin: 20px 0 0 0;
     color: var(--main-text-color);
     font-size: 7rem;
     font-weight: bold;
