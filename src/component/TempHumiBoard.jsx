@@ -13,6 +13,7 @@ function TempHumiBoard( {tempInfo = defaultTempInfo, fontSize}) {
         weather: '--',
         weather_des: '--',
         weather_temp:0,
+        weather_humidity:0,
         cpu_temp:45,
         temp_color: '#56A63B',
         humi_color: '#8FE759'
@@ -42,6 +43,7 @@ function TempHumiBoard( {tempInfo = defaultTempInfo, fontSize}) {
             weather: tempInfo.weather,
             weather_des: tempInfo.weather_des,
             weather_temp: tempInfo.outdoors_temp,
+            weather_humidity: tempInfo.outdoors_humidity,
             cpu_temp: tempInfo.cup_temp,
             temp_color: tempColor,
             humi_color: humiColor
@@ -68,7 +70,7 @@ function TempHumiBoard( {tempInfo = defaultTempInfo, fontSize}) {
                 <p className='Temp-humi-text' style={{ fontSize: fontSize, color: showValues.humi_color}}>{showValues.humi}%</p>
             </div>
             <div className='Temp-humi-board-out'>
-                <p className='Temp-text' style={{ fontSize: fontWeatherSize, color: showValues.temp_color }} >out: {showValues.weather_temp}</p>
+                <p className='Temp-text' style={{ fontSize: fontWeatherSize, color: showValues.temp_color }} >out: {showValues.weather_temp} {showValues.weather_humidity}%</p>
                 <p className='Temp-text' style={{ fontSize: fontWeatherSize, color: '#FDF53D'}} >{showValues.weather_des}</p>
             </div>
             <p className='Temp-text-small'>cpu: {showValues.cpu_temp}˚C</p>
